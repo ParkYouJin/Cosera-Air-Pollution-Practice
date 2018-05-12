@@ -4,7 +4,7 @@ pollutantmean <- function(directory, pollutant, id=1:332){
   for(i in id){
     selectdata<- rbind(selectdata, read.csv(Allfiles[i]))
   }
-  mean(selecdata[,pollutant], na.rm=TRUE)
+  mean(selectdata[,pollutant], na.rm=TRUE)
 }
 
 complete<- function(directory, id=1:332){
@@ -17,7 +17,7 @@ complete<- function(directory, id=1:332){
     comdata
   }
   
-  corr<-function(directory, threshold=0){
+  corr<-function(directory, threshold){
     id=1:332
     Allfiles<-list.files(directory, full.names=TRUE)
     result<- vector(mode="numeric", length=0)
@@ -29,7 +29,6 @@ complete<- function(directory, id=1:332){
         correlation<-cor(Alldataframe[["sulfate"]], Alldataframe[["nitrate"]])
         result<-append(result, correlation)
       }
-      result
     }
+    result
   }
-  

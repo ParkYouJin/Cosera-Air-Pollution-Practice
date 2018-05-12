@@ -4,7 +4,7 @@ pollutantmean <- function(directory, pollutant, id=1:332){
   for(i in id){
     selectdata<- rbind(selectdata, read.csv(Allfiles[i]))
   }
-  mean(selecdata[,pollutant], na.rm=TRUE)
+  mean(selectdata[,pollutant], na.rm=TRUE)
 }
 
 complete<- function(directory, id=1:332){
@@ -14,21 +14,21 @@ complete<- function(directory, id=1:332){
     comdata[i, 1]<- id[i]
     comdata[i, 2]<- sum(complete.cases(read.csv(Allfiles[id[i]])))
   }
-  comdata
-}
-
-corr<-function(directory, threshold=0){
-  id=1:332
-  Allfiles<-list.files(directory, full.names=TRUE)
-  result<- vector(mode="numeric", length=0)
-  for(i in id){
-    Alldataframe<-read.csv(Allfiles[i])
-    nona<-complete.cases(Alldataframe)
-    Alldataframe<-Alldataframe[nona,]
-    if(nrow(Alldataframe)>threshold){
-      correlation<-cor(Alldataframe[["sulfate"]], Alldataframe[["nitrate"]])
-      result<-append(result, correlation)
+    comdata
+  }
+  
+  corr<-function(directory, threshold){
+    id=1:332
+    Allfiles<-list.files(directory, full.names=TRUE)
+    result<- vector(mode="numeric", length=0)
+    for(i in id){
+      Alldataframe<-read.csv(Allfiles[i])
+      nona<-complete.cases(Alldataframe)
+      Alldataframe<-Alldataframe[nona,]
+      if(nrow(Alldataframe)>threshold){
+        correlation<-cor(Alldataframe[["sulfate"]], Alldataframe[["nitrate"]])
+        result<-append(result, correlation)
+      }
     }
     result
   }
-}
